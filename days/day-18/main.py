@@ -7,7 +7,7 @@ from turtle import Turtle, Screen, colormode
 from random import randint, choice
 import colorgram
 
-extract_colors = colorgram.extract('hirst-painting.jpg', 20)
+extract_colors = colorgram.extract('./days/day-18/hirst-painting.jpg', 20)
 print(extract_colors[0].rgb) #returns namedtuple : Rgb(r=226, g=225, b=222)
 
 # colorgram.extract 는 Color 클래스 오브젝트의 리스트를 반환
