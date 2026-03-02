@@ -15,9 +15,12 @@ class Snake:
 
     def add_body(self):
         current_length = len(self.bodies)
-        new_turtle = Turtle(shape="square")
+        new_turtle = Turtle(shape="square",visible=False)
         new_turtle.color("white")
-        new_turtle.goto(self.bodies[current_length-1])
+        new_turtle.penup()
+        new_turtle.speed(0)
+        new_turtle.goto(self.bodies[-1].pos())
+        new_turtle.showturtle()
         self.bodies.append(new_turtle)
 
     def new_snake(self):
@@ -48,3 +51,7 @@ class Snake:
                 self.head.setheading(new_heading)
             elif direction == "d":
                 self.head.setheading(new_heading)
+
+    def get_food(self):
+        print("nom nom nom")
+        self.add_body()
