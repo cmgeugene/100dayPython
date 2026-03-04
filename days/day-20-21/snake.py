@@ -14,7 +14,6 @@ class Snake:
         self.head = self.bodies[0]
 
     def add_body(self):
-        current_length = len(self.bodies)
         new_turtle = Turtle(shape="square",visible=False)
         new_turtle.color("white")
         new_turtle.penup()
