@@ -23,6 +23,7 @@ def cancel_timer():
         canvas.itemconfig(timer_text, text="00:00")
         status_label.config(text="Waiting..")
         check_label.config(text="")
+        start_button.config(text="Start", command=start_timer)
         reps = 0
         remain = 0
 
@@ -33,29 +34,33 @@ def start_timer():
     start_button.config(text="Stop", command=stop_timer)
 
     reps += 1
+
+    # 체크 표시 추가 로직
+    if reps % 2 == 0:
+        mark = "✔" * (reps // 2)
+        check_label.config(text=mark)
+
     if reps == 8:
         # 긴 휴식
         status_label.config(text="Take a LONG break")
-        reps = 1
-        mark = "✔" * math.ceil(reps / 2)
-        check_label.config(text=mark)
-        count_down(5)
-        # remain = LONG_BREAK_MIN*60
-        # count_down(remain)
+        reps = 0
+
+        remain = LONG_BREAK_MIN*60
+        count_down(remain)
 
     elif reps % 2 == 1:
         # 집중 시간
         status_label.config(text="Running")
-        count_down(5)
-        # remain = WORK_MIN*60
-        # count_down(remain)
+
+        remain = WORK_MIN*60
+        count_down(remain)
 
     elif reps % 2 == 0:
         # 휴식 시간
         status_label.config(text="Take a short break")
-        count_down(5)
-        # remain = SHORT_BREAK_MIN*60
-        # count_down(remain)
+
+        remain = SHORT_BREAK_MIN*60
+        count_down(remain)
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 # mainloop() 안에서 지속 실행하기 위해서 재귀 호출 필요
@@ -74,14 +79,13 @@ def count_down(count):
         timer = window.after(1000, count_down, remain)
     else:
         notify_user()
-        mark = "✔" * math.ceil(reps / 2)
-        check_label.config(text=mark)
         start_timer()
 
 # ---------------------------- STOP & RESUME MECHANISM ------------------------------- #
 def stop_timer():
-    global last_state
+    global last_state, timer
     window.after_cancel(id=timer)
+    timer = None
     last_state = status_label.cget("text")
     status_label.config(text="STOP")
     start_button.config(text="Resume", command=resume_timer)
