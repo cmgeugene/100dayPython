@@ -27,6 +27,14 @@ code_dict = {row.letter:row.code for (index,row) in words.iterrows()}
 # print(code_dict)
 
 #TODO 2. Create a list of the phonetic code words from a word that the user inputs.
-user_input = input("Enter a word: ").upper()
-coded = [code_dict[char] for char in user_input]
-print(coded)
+def get_user_input():
+    user_input = input("Enter a word: ").upper()
+    try:
+        coded = [code_dict[char] for char in user_input]
+    except KeyError:
+        print("Only letters are available.")
+        get_user_input()
+    else:
+        print(coded)
+
+get_user_input()
