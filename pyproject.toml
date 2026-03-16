@@ -8,4 +8,5 @@ dependencies = [
     "colorgram-py>=1.2.0",
     "pandas>=3.0.1",
     "pyperclip>=1.11.0",
+    "requests>=2.32.5",
 ]
